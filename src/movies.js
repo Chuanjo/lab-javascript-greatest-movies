@@ -6,24 +6,10 @@ const movies = require("./data");
 // How could you "clean" a bit this array and make it unified (without duplicates)?
 function getAllDirectors(arr) {
     const directors = arr.map ((movie) => {
-    //                           AA 
-    //                           ||
-    // No se porque narices no me funciona si aqui pongo "movies" 
-    // cuando es lo que hay que poner, ademas me pasa en todos!!!!!!!!  
-
       return movie.director
     })
-
     return directors
 }
-
-
-// A partir de aqui en adelante me ha dejado de funcionar la pagina de soluciones
-// asi que no se si estan bien solucionadas, como va siendo costumbre me dejan tirado
-// los programas :( :(
-
-
-
 
 
 // Iteration 2: Steven Spielberg. The best? - How many drama movies did STEVEN SPIELBERG direct?
@@ -32,35 +18,75 @@ function howManyMovies(arr) {
   const spiMov = arr.filter ((movie) => { 
     return (movie.director === "Steven Spielberg" && movie.genre.includes("Drama"))
   })
-  console.log(spiMov)
   return spiMov.length
 }
 
 // Iteration 3: All scores average - Get the average of all scores with 2 decimals
 function scoresAverage(arr) {
-  const aveScore = arr.reduce ((acum, elem) => {
+  const averScore = arr.reduce ((acum, elem) => {
     if (elem.score !== undefined){
-      return acum + elem.score / movie.length
+      return acum + elem.score / arr.length
     } else {
       return acum 
     }
-  })
-  return number(averScore.toFixed(2))
+  },0)
+  return Number(averScore.toFixed(2))
 }
 
-// No he podido hacer mas de momento :_(
-
-
-
-
 // Iteration 4: Drama movies - Get the average of Drama Movies
-function dramaMoviesScore() {}
+function dramaMoviesScore(arr) {
+  let movDrama = arr.filter ((element) => {
+    return element.genre.includes("Drama")
+  })
+  let totalMovDrama = movDrama.reduce((accum, elem) => {
+    if (elem.score === undefined) {
+      return accum 
+    } else {
+      return accum + elem.score / movDrama.length
+    }
+  },0)
+  return Number(totalMovDrama.toFixed(2))
+}
+
+
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
-function orderByYear() {}
+function orderByYear(arr) {
+  let copyMovies = JSON.parse(JSON.stringify(arr))
+  let sortedByYear = copyMovies.sort((first, second) => {
+    if (first.year > second.year) {
+      return 1 
+    } else if ( first.year < second.year){
+      return -1
+    } else {
+      if (first.title > second.title) {
+        return 1
+      } else {
+        return -1
+      }
+    }
+  })
+  return sortedByYear
+}
 
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
-function orderAlphabetically() {}
+function orderAlphabetically(arr) {
+  let copyMovies = JSON.parse(JSON.stringify(arr))
+  let titles = copyMovies.map((mov) => {
+    return mov.title
+  })
+  let sortedByTitle = titles.sort((first, second) =>{
+    if (first > second) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+  if (sortedByTitle.length > 20) {
+    sortedByTitle = sortedByTitle.slice(0, 20)
+  }
+  return sortedByTitle
+}
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
 function turnHoursToMinutes() {}
